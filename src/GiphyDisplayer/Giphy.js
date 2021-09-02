@@ -6,17 +6,18 @@
 // const Giphy = () => {
 //   const [userIngredients, setUserIngredients] = useState([])
 
-//   //   useEffect(() => {
-//   //     console.log("RENDERING INGREDIENTS", userIngredients)
-//   //   }, [userIngredients])
-
 //   const filteredIngredientsHandler = useCallback((filteredIngredients) => {
 //     setUserIngredients(filteredIngredients)
 //   }, [])
 
 //   return (
 //     <div className="App">
-//       <Search onLoadIngredients={filteredIngredientsHandler} />
+//       {/* {error && <ErrorModal onClose={clearError}>{error}</ErrorModal>} */}
+
+//       <section>
+//         <Search onLoadIngredients={filteredIngredientsHandler} />
+//         <IngredientList ingredients={userIngredients} />
+//       </section>
 //     </div>
 //   )
 // }
