@@ -9,14 +9,15 @@ import "./Search.css"
 const Search = React.memo(() => {
   const [enteredFilter, setEnteredFilter] = useState("")
   const [gifArray, setGifArray] = useState([{ id: 0, title: "", url: "" }])
-  const [activePage, setActivePage] = useState(1)
+  //const [activePage, setActivePage] = useState(1)
   const [totalCount, setTotalCount] = useState(0)
   const [foundGifs, setFoundGifs] = useState(false)
   const inputRef = useRef()
   const limit = 5
+  var activePage = 1
 
   const handleFetch = () => {
-    let offset = activePage * limit - (limit - 1) //offset=0 or undefined causes response.ok==false, then it has to start at 1.
+    const offset = activePage * limit - (limit - 1) //offset=0 or undefined causes response.ok==false, then it has to start at 1.
     const query = `?q="${enteredFilter}"&api_key=dc6zaTOxFJmzC&limit=${limit}&offset=${offset}`
 
     console.log("query", query)
@@ -28,6 +29,9 @@ const Search = React.memo(() => {
           return response.json()
         } else {
           setFoundGifs(false)
+          setGifArray([{ id: 0, title: "", url: "" }])
+          setTotalCount(0)
+          activePage = 1 ///
         }
       })
       .then((response) => {
@@ -47,7 +51,7 @@ const Search = React.memo(() => {
         } else {
           setGifArray([{ id: 0, title: "", url: "" }])
           setTotalCount(0)
-          setActivePage(1) ////
+          activePage = 1 ///
           //no Gifs found
         }
       })
@@ -59,7 +63,7 @@ const Search = React.memo(() => {
         enteredFilter === inputRef.current.value &&
         enteredFilter.length !== 0
       ) {
-        setActivePage(1) /////
+        activePage = 1 /////
         handleFetch()
       }
     }, 300)
@@ -70,8 +74,7 @@ const Search = React.memo(() => {
 
   const handlePageChange = (pageNumber) => {
     console.log("selected", pageNumber.selected)
-    let page = pageNumber.selected + 1
-    setActivePage(page)
+    activePage = pageNumber.selected + 1 ///activePage deixarà de ser un state, el faré una constant a tot arreu, ja que no el mostrem.
     console.log("current page", activePage)
     handleFetch()
   }
@@ -100,11 +103,12 @@ const Search = React.memo(() => {
           pageRangeDisplayed={limit}
           onPageChange={handlePageChange}
           containerClassName={"container"}
+          //forcePage={activePage - 1} //
           previousLinkClassName={"page"}
           breakClassName={"page"}
           nextLinkClassName={"page"}
           pageClassName={"page"}
-          disabledClassNae={"disabled"}
+          disabledClassName={"disabled"}
           activeClassName={"active"}
         />
       </div>
