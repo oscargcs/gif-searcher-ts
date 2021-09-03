@@ -6,8 +6,7 @@ import ReactPaginate from "react-paginate"
 import Card from "../UI/Card"
 import "./Search.css"
 
-const Search = React.memo((props) => {
-  const { onLoadIngredients } = props
+const Search = React.memo(() => {
   const [enteredFilter, setEnteredFilter] = useState("")
   const [gifArray, setGifArray] = useState([{ id: 0, title: "", url: "" }])
   const [activePage, setActivePage] = useState(1)
@@ -70,8 +69,10 @@ const Search = React.memo((props) => {
   }, [enteredFilter, inputRef]) //this rerenders only when the filter is changed, not when the page is changed
 
   const handlePageChange = (pageNumber) => {
-    console.log(`active page is ${pageNumber.selected}`)
-    setActivePage(pageNumber.selected)
+    console.log("selected", pageNumber.selected)
+    let page = pageNumber.selected + 1
+    setActivePage(page)
+    console.log("current page", activePage)
     handleFetch()
   }
 
