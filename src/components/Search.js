@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react"
-import { act } from "react-dom/cjs/react-dom-test-utils.production.min"
+
 // import Pagination from "react-js-pagination"
 import ReactPaginate from "react-paginate"
 
@@ -9,12 +9,12 @@ import "./Search.css"
 const Search = React.memo(() => {
   const [enteredFilter, setEnteredFilter] = useState("")
   const [gifArray, setGifArray] = useState([{ id: 0, title: "", url: "" }])
-  //const [activePage, setActivePage] = useState(1)
   const [totalCount, setTotalCount] = useState(0)
   const [foundGifs, setFoundGifs] = useState(false)
   const inputRef = useRef()
+  const [staPage, setStaPage] = useState(1)
   const limit = 5
-  var activePage = 1
+  var activePage = 1 //a variable is also needed to update the offset
 
   const handleFetch = () => {
     const offset = activePage * limit - (limit - 1) //offset=0 or undefined causes response.ok==false, then it has to start at 1.
@@ -63,7 +63,8 @@ const Search = React.memo(() => {
         enteredFilter === inputRef.current.value &&
         enteredFilter.length !== 0
       ) {
-        activePage = 1 /////
+        setStaPage(1)
+        activePage = 1
         handleFetch()
       }
     }, 300)
@@ -74,6 +75,7 @@ const Search = React.memo(() => {
 
   const handlePageChange = (pageNumber) => {
     console.log("selected", pageNumber.selected)
+    setStaPage(pageNumber.selected + 1)
     activePage = pageNumber.selected + 1 ///activePage deixarà de ser un state, el faré una constant a tot arreu, ja que no el mostrem.
     console.log("current page", activePage)
     handleFetch()
@@ -103,7 +105,7 @@ const Search = React.memo(() => {
           pageRangeDisplayed={limit}
           onPageChange={handlePageChange}
           containerClassName={"container"}
-          //forcePage={activePage - 1} //
+          forcePage={staPage - 1} //this needs to be a state to rerender
           previousLinkClassName={"page"}
           breakClassName={"page"}
           nextLinkClassName={"page"}
@@ -124,6 +126,5 @@ const Search = React.memo(() => {
     </section>
   )
 })
-//al div farem gifArray.map((item)=>{<img src={item.url} alt="Searched gifs" />})
 
 export default Search
