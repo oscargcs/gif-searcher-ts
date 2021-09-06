@@ -6,19 +6,22 @@ import ReactPaginate from "react-paginate"
 import Card from "../UI/Card"
 import "./Search.css"
 
+import GifDisplayer from "./GifDisplayer"
+
 const Search = React.memo(() => {
   const [enteredFilter, setEnteredFilter] = useState("")
   const [gifArray, setGifArray] = useState([{ id: 0, title: "", url: "" }])
   const [totalCount, setTotalCount] = useState(0)
   const [foundGifs, setFoundGifs] = useState(false)
   const inputRef = useRef()
-  const [staPage, setStaPage] = useState(1)
-  const limit = 5
+  const [statePage, setStatePage] = useState(1)
+  const key = "dc6zaTOxFJmzC"
+  const limit = 4
   var activePage = 1 //a variable is also needed to update the offset
 
   const handleFetch = () => {
     const offset = activePage * limit - (limit - 1) //offset=0 or undefined causes response.ok==false, then it has to start at 1.
-    const query = `?q="${enteredFilter}"&api_key=dc6zaTOxFJmzC&limit=${limit}&offset=${offset}`
+    const query = `?q="${enteredFilter}"&api_key=${key}&limit=${limit}&offset=${offset}`
 
     console.log("query", query)
     fetch("http://api.giphy.com/v1/gifs/search" + query) // Example'http://api.giphy.com/v1/gifs/search?q=ryan+gosling&api_key=YOUR_API_KEY&limit=5&offset=4'
@@ -51,8 +54,7 @@ const Search = React.memo(() => {
         } else {
           setGifArray([{ id: 0, title: "", url: "" }])
           setTotalCount(0)
-          activePage = 1 ///
-          //no Gifs found
+          activePage = 1
         }
       })
   }
@@ -63,7 +65,7 @@ const Search = React.memo(() => {
         enteredFilter === inputRef.current.value &&
         enteredFilter.length !== 0
       ) {
-        setStaPage(1)
+        setStatePage(1)
         activePage = 1
         handleFetch()
       }
@@ -75,8 +77,8 @@ const Search = React.memo(() => {
 
   const handlePageChange = (pageNumber) => {
     console.log("selected", pageNumber.selected)
-    setStaPage(pageNumber.selected + 1)
-    activePage = pageNumber.selected + 1 ///activePage deixarà de ser un state, el faré una constant a tot arreu, ja que no el mostrem.
+    setStatePage(pageNumber.selected + 1)
+    activePage = pageNumber.selected + 1
     console.log("current page", activePage)
     handleFetch()
   }
@@ -105,7 +107,7 @@ const Search = React.memo(() => {
           pageRangeDisplayed={limit}
           onPageChange={handlePageChange}
           containerClassName={"container"}
-          forcePage={staPage - 1} //this needs to be a state to rerender
+          forcePage={statePage - 1} //this needs to be a state to effectively rerender the component
           previousLinkClassName={"page"}
           breakClassName={"page"}
           nextLinkClassName={"page"}
@@ -114,15 +116,7 @@ const Search = React.memo(() => {
           activeClassName={"active"}
         />
       </div>
-      <div>
-        {foundGifs ? (
-          gifArray.map((item) => {
-            return <img src={item.url} alt="Searched gifs" />
-          })
-        ) : (
-          <h2>No gifs found according to your search</h2>
-        )}
-      </div>
+      <GifDisplayer foundGifs={foundGifs} gifArray={gifArray} />
     </section>
   )
 })

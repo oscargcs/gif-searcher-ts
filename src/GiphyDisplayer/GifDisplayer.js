@@ -1,13 +1,21 @@
-import React from "react"
+// import React from "react"
 
-import "./IngredientList.css"
+// import "./IngredientList.css"
 
-const GiphyDisplayer = (props) => {
-  return (
-    <section className="ingredient-list">
-      {props.gifArray.map((item) => {
-        return <img src={item.url} alt="Searched gifs" />
-      })}
-    </section>
-  )
-}
+// const GifDisplayer = (props) => {
+//   return (
+//     <div className="row">
+//         {props.foundGifs ? (
+//           props.gifArray.map((item) => {
+//             return (
+//               <div className="column">
+//                 <img src={item.url} alt="Searched gifs" />
+//               </div>
+//             )
+//           })
+//         ) : (
+//           <h2>No gifs found according to your search</h2>
+//         )}
+//       </div>
+//   )
+// }
