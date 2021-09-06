@@ -1,13 +1,10 @@
 import React from "react"
-import Search from "./components/Search"
-
-import Giphy from "./GiphyDisplayer/Giphy"
+import GiphySearcher from "./main/GiphySearcher"
 
 const App = (props) => {
-  //return <Giphy />
   return (
     <div className="App">
-      <Search />
+      <GiphySearcher />
     </div>
   )
 }
