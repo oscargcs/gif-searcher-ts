@@ -8,16 +8,13 @@ import "./GiphySearcher.css"
 import GifDisplayer from "../GiphyDisplayer/GifDisplayer"
 import useHandleFetch from "../hooks/useHandleFetch"
 
-const GiphySearcher = React.memo(() => {
+const GiphySearcher = () => {
   const key = "dc6zaTOxFJmzC"
   const limit = 4
-  var activePage = 1 //a variable is also needed to update the offset
+  var activePage = 1
   const [enteredFilter, setEnteredFilter] = useState("")
   const [statePage, setStatePage] = useState(1)
-  const { gifArray, totalCount, foundGifs, handleFetch } = useHandleFetch(
-    enteredFilter,
-    limit
-  )
+  const { gifArray, totalCount, foundGifs, handleFetch } = useHandleFetch()
   const inputRef = useRef()
 
   useEffect(() => {
@@ -28,20 +25,18 @@ const GiphySearcher = React.memo(() => {
       ) {
         setStatePage(1)
         activePage = 1
-        activePage = handleFetch(activePage, key)
+        activePage = handleFetch(enteredFilter, activePage, key, limit)
       }
     }, 300)
     return () => {
       clearTimeout(timer)
     }
-  }, [enteredFilter, inputRef]) //this rerenders only when the filter is changed, not when the page is changed
+  }, [enteredFilter, inputRef])
 
   const handlePageChange = (pageNumber) => {
-    console.log("selected", pageNumber.selected)
     setStatePage(pageNumber.selected + 1)
     activePage = pageNumber.selected + 1
-    console.log("current page", activePage)
-    activePage = handleFetch(activePage, key)
+    activePage = handleFetch(enteredFilter, activePage, key, limit)
   }
 
   return (
@@ -67,7 +62,7 @@ const GiphySearcher = React.memo(() => {
           pageRangeDisplayed={limit}
           onPageChange={handlePageChange}
           containerClassName={"container"}
-          forcePage={statePage - 1} //this needs to be a state to effectively rerender the component
+          forcePage={statePage - 1}
           previousLinkClassName={"page"}
           breakClassName={"page"}
           nextLinkClassName={"page"}
@@ -79,6 +74,6 @@ const GiphySearcher = React.memo(() => {
       <GifDisplayer foundGifs={foundGifs} gifArray={gifArray} />
     </section>
   )
-})
+}
 
 export default GiphySearcher
