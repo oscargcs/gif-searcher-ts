@@ -8,7 +8,7 @@ const GifDisplayer = (props) => {
       {props.foundGifs ? (
         props.gifArray.map((item) => {
           return (
-            <div className="column">
+            <div key={item.id} className="column">
               <img src={item.url} alt="Searched gifs" />
             </div>
           )
