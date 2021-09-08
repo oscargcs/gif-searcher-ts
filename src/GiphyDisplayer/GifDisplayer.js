@@ -1,10 +1,12 @@
 import React from "react"
+import LoadingIndicator from "../UI/LoadingIndicator"
 
 import "./GifDisplayer.css"
 
 const GifDisplayer = (props) => {
   return (
     <div className="row">
+      {props.isLoading && <LoadingIndicator />}
       {props.foundGifs ? (
         props.gifArray.map((item) => {
           return (

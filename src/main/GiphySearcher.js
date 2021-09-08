@@ -14,7 +14,8 @@ const GiphySearcher = () => {
   var activePage = 1
   const [enteredFilter, setEnteredFilter] = useState("")
   const [statePage, setStatePage] = useState(1)
-  const { gifArray, totalCount, foundGifs, handleFetch } = useHandleFetch()
+  const { gifArray, totalCount, foundGifs, isLoading, handleFetch } =
+    useHandleFetch()
   const inputRef = useRef()
 
   useEffect(() => {
@@ -71,7 +72,11 @@ const GiphySearcher = () => {
           activeClassName={"active"}
         />
       </div>
-      <GifDisplayer foundGifs={foundGifs} gifArray={gifArray} />
+      <GifDisplayer
+        foundGifs={foundGifs}
+        gifArray={gifArray}
+        isLoading={isLoading}
+      />
     </section>
   )
 }
