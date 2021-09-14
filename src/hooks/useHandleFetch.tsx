@@ -1,14 +1,33 @@
 import { useState } from "react"
+import Data from "../models/data"
 
-const useHandleFetch = () => {
-  const [gifArray, setGifArray] = useState([{ id: 0, url: "" }])
-  const [totalCount, setTotalCount] = useState(0)
-  const [foundGifs, setFoundGifs] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+interface FetchResult {
+  gifArray: Data[]
+  totalCount: number
+  foundGifs: boolean
+  isLoading: boolean
+  handleFetch: (
+    enteredFilter: string,
+    activePage: number,
+    apiKey: string,
+    limit: number
+  ) => number
+}
 
-  const handleFetch = (enteredFilter, activePage, key, limit) => {
-    const offset = activePage * limit - (limit - 1)
-    const query = `?q="${enteredFilter}"&api_key=${key}&limit=${limit}&offset=${offset}`
+const useHandleFetch = (): FetchResult => {
+  const [gifArray, setGifArray] = useState<Data[]>([{ id: "", url: "" }])
+  const [totalCount, setTotalCount] = useState<number>(0)
+  const [foundGifs, setFoundGifs] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  const handleFetch = (
+    enteredFilter: string,
+    activePage: number,
+    apiKey: string,
+    limit: number
+  ) => {
+    const offset: number = activePage * limit - limit
+    const query: string = `?q="${enteredFilter}"&api_key=${apiKey}&limit=${limit}&offset=${offset}`
     setIsLoading(true)
     fetch("http://api.giphy.com/v1/gifs/search" + query)
       .then((response) => {
@@ -18,7 +37,7 @@ const useHandleFetch = () => {
         } else {
           setIsLoading(false)
           setFoundGifs(false)
-          setGifArray([{ id: 0, url: "" }])
+          setGifArray([{ id: "", url: "" }])
           setTotalCount(0)
           activePage = 1
         }
@@ -26,7 +45,8 @@ const useHandleFetch = () => {
       .then((response) => {
         setIsLoading(false)
         if (typeof response !== "undefined") {
-          const gifAuxArray = []
+          const gifAuxArray: Data[] = []
+
           for (const key in response.data) {
             gifAuxArray.push({
               id: key,
@@ -36,7 +56,7 @@ const useHandleFetch = () => {
           }
           setGifArray(gifAuxArray)
         } else {
-          setGifArray([{ id: 0, url: "" }])
+          setGifArray([{ id: "", url: "" }])
           setTotalCount(0)
           activePage = 1
         }

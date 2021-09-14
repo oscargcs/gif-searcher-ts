@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef } from "react"
 
 import ReactPaginate from "react-paginate"
 
@@ -9,24 +9,24 @@ import GifDisplayer from "../GiphyDisplayer/GifDisplayer"
 import useHandleFetch from "../hooks/useHandleFetch"
 
 const GiphySearcher = () => {
-  const key = "dc6zaTOxFJmzC"
-  const limit = 4
-  var activePage = 1
-  const [enteredFilter, setEnteredFilter] = useState("")
-  const [statePage, setStatePage] = useState(1)
+  const apiKey: string = "dc6zaTOxFJmzC"
+  const limit: number = 4
+  var activePage: number = 1
+  const [enteredFilter, setEnteredFilter] = useState<string>("")
+  const [statePage, setStatePage] = useState<number>(1)
   const { gifArray, totalCount, foundGifs, isLoading, handleFetch } =
     useHandleFetch()
-  const inputRef = useRef()
+  const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     const timer = setTimeout(() => {
       if (
-        enteredFilter === inputRef.current.value &&
+        enteredFilter === inputRef.current?.value &&
         enteredFilter.length !== 0
       ) {
         setStatePage(1)
         activePage = 1
-        activePage = handleFetch(enteredFilter, activePage, key, limit)
+        activePage = handleFetch(enteredFilter, activePage, apiKey, limit)
       }
     }, 300)
     return () => {
@@ -34,16 +34,16 @@ const GiphySearcher = () => {
     }
   }, [enteredFilter, inputRef])
 
-  const handlePageChange = (pageNumber) => {
+  const handlePageChange = (pageNumber: any) => {
     setStatePage(pageNumber.selected + 1)
     activePage = pageNumber.selected + 1
-    activePage = handleFetch(enteredFilter, activePage, key, limit)
+    activePage = handleFetch(enteredFilter, activePage, apiKey, limit)
   }
 
   return (
     <section className="search">
       <div>
-        <h1 align="center">GIPHY SEARCHER</h1>
+        <h1 text-align="center">GIPHY SEARCHER</h1>
       </div>
       <Card>
         <div className="search-input">

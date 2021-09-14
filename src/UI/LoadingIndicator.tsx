@@ -2,7 +2,7 @@ import React from "react"
 
 import "./LoadingIndicator.css"
 
-const LoadingIndicator = () => (
+const LoadingIndicator: React.FC = () => (
   <div className="lds-ring">
     <div />
     <div />

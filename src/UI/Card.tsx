@@ -2,7 +2,7 @@ import React from "react"
 
 import "./Card.css"
 
-const Card = (props) => {
+const Card: React.FC<{ children: any }> = (props) => {
   return <div className="card">{props.children}</div>
 }
 
