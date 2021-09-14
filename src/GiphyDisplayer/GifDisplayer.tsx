@@ -20,7 +20,7 @@ const GifDisplayer: React.FC<{
               </div>
             )
           })
-        : !props.foundGifs && <h2>No gifs found according to your search</h2>}
+        : !props.isLoading && <h2>No gifs found according to your search</h2>}
     </div>
   )
 }

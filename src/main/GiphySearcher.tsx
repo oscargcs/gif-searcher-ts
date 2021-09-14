@@ -43,7 +43,7 @@ const GiphySearcher = () => {
   return (
     <section className="search">
       <div>
-        <h1 text-align="center">GIPHY SEARCHER</h1>
+        <h1 className="h1">GIPHY SEARCHER</h1>
       </div>
       <Card>
         <div className="search-input">
