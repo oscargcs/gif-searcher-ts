@@ -59,8 +59,8 @@ const GiphySearcher = () => {
       <div>
         <ReactPaginate
           marginPagesDisplayed={2}
-          pageCount={totalCount}
-          pageRangeDisplayed={limit}
+          pageCount={Math.ceil(totalCount / limit)}
+          pageRangeDisplayed={5}
           onPageChange={handlePageChange}
           containerClassName={"container"}
           forcePage={statePage - 1}
