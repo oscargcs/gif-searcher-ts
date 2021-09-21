@@ -1,3 +1,15 @@
+/* title */
+h1 {
+  font-size: 35px;
+  line-height: 1.1;
+  background: -webkit-linear-gradient(left, blue, green);
+  background: -o-linear-gradient(right, blue, green);
+  background: -moz-linear-gradient(right, blue, green);
+  background: linear-gradient(to right, blue, green);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 /* search */
 .search {
   width: 30rem;
