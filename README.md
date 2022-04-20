@@ -4,11 +4,11 @@ This project interacts with the Giphy API. It allows the user to search for GIFs
 
 In the project directory, you can run:
 
-## `npm install`
+### `npm install`
 
 Installs the dependencies in the local node_modules folder.
 
-## 'npm i --save-dev @types/react-paginate'
+### `npm i --save-dev @types/react-paginate`
 
 Installs the necessary 'react-paginate' dependency. 
 
