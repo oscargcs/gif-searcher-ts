@@ -1,4 +1,4 @@
-This project interacts with the Giphy API. It allows the user to search for GIFs and it displays them. A new search is made after the user stops typing for 300 ms. It includes a pagination feature.
+This project interacts with the Giphy API. It allows the user to search for GIFs and it displays them. A new search is made after the user stops typing for 300 ms. It includes a pagination feature. 
 
 ## Available Scripts
 
@@ -7,6 +7,10 @@ In the project directory, you can run:
 ### `npm install`
 
 Installs the dependencies in the local node_modules folder.
+
+## 'npm i --save-dev @types/react-paginate'
+
+Installs the necessary 'react-paginate' dependency. 
 
 ### `npm start`
 
